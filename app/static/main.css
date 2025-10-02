@@ -1,0 +1,110 @@
+ :root {
+      /* Tema escuro (padrão) */
+      --bg: #1e1e2e;
+      --sidebar: #2a2a3b;
+      --sidebar-buttons: #232331;
+      --text: #ffffff;
+      --chat-box: rgba(255, 255, 255, 0.05);
+      --primary: #4f46e5;
+    }
+    a:link, a:hover, a:active, a:visited{
+      text-decoration: none;
+      color: var(--text);
+    }
+    body.light {
+      /* Tema claro */
+      --bg: #f5f5f5;
+      --sidebar: #ffffff;
+      --sidebar-buttons: #bebdbdd0;
+      --text: #222222;
+      --chat-box: #e4e4e4;
+    }
+
+    body {
+      margin: 0;
+      font-family: "JetBrains Mono", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      min-width: 80px;
+      width: 120px;
+      background: var(--sidebar);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background 0.3s;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+    .menu li{
+      list-style: none;
+    }
+    .sidebar-button {
+      color: var(--text);
+      font-weight: 400;
+      text-align: center;
+      text-wrap-mode: wrap;
+      margin-left: -20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+      margin-right: 10px;
+      margin-bottom: 20%; 
+      padding: .5px 20px .5px 20px;
+      border-radius: 10px;
+    }
+
+    .sidebar-button:hover {
+      color: var(--primary);
+      background-color: var(--sidebar-buttons);
+    }
+
+    /* Botão de tema */
+    .theme-toggle {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      
+    }
+
+    .logo{
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* Área principal */
+    .main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .main h1{
+      font-weight: 800;
+    }
+
+    .chat-box {
+      flex: 1;
+      background: var(--chat-box);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      overflow-y: auto;
+      transition: background 0.3s;
+      
+    }
