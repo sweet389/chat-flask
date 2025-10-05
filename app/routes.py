@@ -45,3 +45,13 @@ def logout():
 def chat():
     print(current_user, current_user.name)
     return render_template('main/home.html')
+
+@app.route('/profile')
+@login_required 
+def profile():
+    return render_template('main/profile.html')
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404

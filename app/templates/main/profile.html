@@ -16,7 +16,7 @@
         <hr>
       <ul class="menu">
         <li><div class="sidebar-button">
-            <a href="profile">👤 Perfil</a>
+            <a href="{{ url_for('profile')}}">👤 Perfil</a>
         </div></li>
         <li><div class="sidebar-button">
             <a href="chat_list">💬 Meus Chats</a>
@@ -26,13 +26,26 @@
         </div></li>
       </ul>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙 Tema</button>
+    <button class="theme-toggle" onclick="toggleTheme()" style="font-size: 16px;">🌙 Tema</button>
   </div>
 
   <div class="main">
-    <h1>Bem-vindo ao chat!</h1>
+    <h1>Profile</h1>
     <div class="chat-box">
-      <p>Aqui vai o conteúdo do chat selecionado...</p>
+      <form action="" method="post">
+        <div class="input-field">
+            <input type="text" name="userForm" id="">
+            <label style="font-size: 26px;">Change your name here [Actual name: {{ current_user.name }}]</label>
+        </div>
+        <div>
+            <button type="submit">Change</button>
+        </div>
+      </form>
+      <div>
+        <a href="chat/logout" target="_parent" id="logout" style="width: fit-content;">
+              Logout
+        </a>
+      </div>
     </div>
   </div>
 
