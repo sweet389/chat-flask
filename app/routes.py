@@ -22,6 +22,7 @@ def login():
         
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    print(request.form.keys())
     if request.method=='GET':
         return render_template('auth/register.html')
     elif request.method=='POST':
@@ -46,11 +47,16 @@ def chat():
     print(current_user, current_user.name)
     return render_template('main/home.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['POST', 'GET'])
 @login_required 
 def profile():
-    return render_template('main/profile.html')
-
+    if request.method=='GET':
+        return render_template('main/profile.html')
+    elif request.method=='POST':
+        user=db.session.query(Usuario).filter_by(id=current_user.id).first()
+        user.name=request.form['userForm']
+        db.session.commit()
+        return redirect(url_for('profile'))
 
 @app.errorhandler(404)
 def page_not_found(error):

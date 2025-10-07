@@ -34,8 +34,8 @@
     <div class="chat-box">
       <form action="" method="post">
         <div class="input-field">
-            <input type="text" name="userForm" id="">
-            <label style="font-size: 26px;">Change your name here [Actual name: {{ current_user.name }}]</label>
+            <label style="font-size: 26px;">Change your name here [{{ current_user.name }}]</label>
+            <input type="text" name="userForm" id="" minlength="4">
         </div>
         <div>
             <button type="submit">Change</button>
