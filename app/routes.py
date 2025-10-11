@@ -2,7 +2,7 @@ from app import app
 from db import db
 from login import hash
 from flask_login import login_user, login_required, logout_user, current_user
-from models import Usuario
+from models import Usuario, Group, GroupMember
 from flask import render_template, redirect, request, url_for
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -58,6 +58,51 @@ def profile():
         db.session.commit()
         return redirect(url_for('profile'))
 
+@app.route('/group/create', methods=['POST', 'GET'])
+@login_required
+def create_group():
+    if request.method=='POST':
+        name=request.form['group_name']
+        _passwd=request.form['passwd']
+        public=request.form.get('public')
+        print(public)
+        if public=='on': 
+            group = Group(name=name, created_by=current_user.id, public=True)
+            db.session.add(group)
+            db.session.flush()
+            membership = GroupMember(group_id=group.id, user_id=current_user.id, role='owner')
+            db.session.add(membership)
+        elif public==None:
+            group = Group(name=name,passwd=hash(_passwd), created_by=current_user.id,public=False)
+            db.session.add(group)
+            db.session.flush()
+            membership = GroupMember(group_id=group.id, user_id=current_user.id, role='owner')
+            db.session.add(membership)
+        db.session.commit()
+        return redirect(url_for('create_group'))
+    elif request.method=='GET':
+        return render_template('group/create.html')
+
+@app.route('/group/search', methods=['GET', 'POST'])
+@login_required
+def search_group():
+    if request.method=='GET':
+        lista_grupos=db.session.query(Group).filter_by(public=True).all()
+        lista_grupospv=db.session.query(Group).join(GroupMember).filter(GroupMember.user_id == current_user.id,Group.public.is_(False)).all()
+        return render_template('group/search.html', groups_public=lista_grupos, groups_private=lista_grupospv)
+    elif request.method=='POST':
+        print(request.form['group_name'], request.form['group_pass'])
+        add_member(request.form['group_name'], request.form['group_pass'])
+        return redirect(url_for('search_group'))
+    
+    
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
+
+
+def add_member(name, passwd):
+    group=db.session.query(Group).filter_by(name=name, passwd=hash(passwd), public=False).first()
+    membership = GroupMember(group_id=group.id, user_id=current_user.id, role='member')
+    db.session.add(membership)
+    db.session.commit()

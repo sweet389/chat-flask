@@ -26,15 +26,31 @@
         </div></li>
       </ul>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙 Tema</button>
+    <button class="theme-toggle" onclick="toggleTheme()" style="font-size: 16px;">🌙 Tema</button>
   </div>
 
   <div class="main">
-    <h1>Bem-vindo ao chat!</h1>
-    <div class="chat-box">
-      <p>Aqui vai o conteúdo do chat selecionado...</p>
+    <h1>Create Group</h1>
+    <form action="" method="post">
+        <div class="chat-box">
+            <div class="input-field">
+
+                <label for="group_name">Group Name</label>
+                <input type="text" name="group_name" id="" minlength="4" required >
+
+                <label for="passwd">Password</label>
+                <input type="text" name="passwd" id="">
+                <div id="public_check">
+                  <input type="checkbox" name="public" id="">
+                  <label for="public">Public</label>
+                </div>
+            </div>
+            <div>
+                <button type="submit">Create</button>
+            </div>
+        </div>
+    </form>
     </div>
-  </div>
 
   <script>
     function toggleTheme() {

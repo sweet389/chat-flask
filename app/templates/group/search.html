@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Chat</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap">
+  <link rel="stylesheet" href="../../static/main.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+        <div class="logo">
+            <h1 class="logo">Chat</h1>
+        </div>
+        <hr>
+      <ul class="menu">
+        <li><div class="sidebar-button">
+            <a href="{{ url_for('profile')}}">👤 Perfil</a>
+        </div></li>
+        <li><div class="sidebar-button">
+            <a href="{{ url_for('create_group')}}">💬 Criar Grupos</a>
+        </div></li>
+        <li><div class="sidebar-button">
+            <a href="{{ url_for('search_group')}}">🔍 Buscar Chats</a>
+        </div></li>
+      </ul>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" style="font-size: 16px;">🌙 Tema</button>
+  </div>
+
+    <div class="main">
+    <h1>Search Group</h1>
+    
+    <div class="chat-box" style="justify-content: flex-start;">
+      <div class="search_group">
+        <form action="" method="post">
+          <h2>Private Groups</h2>
+          <div class="input-field">
+            <input type="text" required name="group_name" minlength="1">
+            <label>Enter the group name</label>
+          </div>
+          <div class="input-field">
+            <input type="password" required name="group_pass" minlength="1">
+            <label>Enter the group password</label>
+          </div>
+          <button type="submit" name="cadastrar">Find</button>
+        </form>
+      </div>
+      <hr style="width: 80%; margin-top: 20px;margin-bottom: 20px;">
+      <div class="groups">
+        <ul class="listas">
+          <h2>Publicos</h2>
+            {% for group in groups_public %}
+                <li><a href="/group/{{group.id}}">{{ group.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <hr style="height: 100%; margin-top: 40px; margin-left: 10px;margin-right: 10px;">
+        <ul class="listas">
+        <h2>Privados</h2>
+            {% for group in groups_private %}
+                <li><a href="/g/{{group.id}}">{{ group.name }}</a></li>
+            {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
+  </script>
+</body>
+</html>

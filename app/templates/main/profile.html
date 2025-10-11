@@ -19,10 +19,10 @@
             <a href="{{ url_for('profile')}}">👤 Perfil</a>
         </div></li>
         <li><div class="sidebar-button">
-            <a href="chat_list">💬 Meus Chats</a>
+            <a href="{{ url_for('create_group')}}">💬 Criar Grupos</a>
         </div></li>
         <li><div class="sidebar-button">
-            <a href="search">🔍 Buscar Chats</a>
+            <a href="{{url_for('search_group')}}">🔍 Buscar Chats</a>
         </div></li>
       </ul>
     </div>
