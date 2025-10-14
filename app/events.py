@@ -19,8 +19,11 @@ def handle_user_join(user, group_id):
     users_group[request.sid] = group_id
     print(users)
     join_room(group_id)
-    send({"name": user, "message": "has entered the room"}, to=group_id)
-    
+    emit("chat", {
+        "message": f"{user} has entered the room",
+        'username': "System"
+    },to=group_id)
+      
 @socketio.on("disconnect")
 def handle_user_disconnect():
     user=None
@@ -31,6 +34,10 @@ def handle_user_disconnect():
             user = u
             break
     print(f"{user} Left at {group_id}")
+    emit("chat", {
+        "message": f"{user} has left the room",
+        'username': "System"
+    },to=group_id)
 
     if user:
         del users[user]
