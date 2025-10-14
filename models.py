@@ -5,8 +5,10 @@ class Usuario(UserMixin,db.Model):
     __tablename__ = 'users'
     
     id= db.Column(db.Integer, primary_key=True)
-    name= db.Column(db.String(32), unique=True)
-    passwd= db.Column(db.String())
+    name= db.Column(db.String(32), unique=True, nullable=False)
+    passwd= db.Column(db.String(), nullable=False)
+    user_ip= db.Column(db.String(), nullable=False)
+    created_at= db.Column(db.String())
     
     groups_created=db.relationship('Group', backref='creator',lazy=True)
     memberships=db.relationship('GroupMember', backref='user', lazy=True)
@@ -19,6 +21,7 @@ class Group(db.Model):
     passwd=db.Column(db.String(), nullable=True)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     public = db.Column(db.Boolean,default=False)
+    created_at= db.Column(db.String())
     members=db.relationship('GroupMember', backref='group',lazy=True)
     
 class GroupMember(db.Model):
