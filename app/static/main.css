@@ -260,3 +260,11 @@ button:hover, #logout:hover {
       justify-content: space-between;
       flex-direction: column;
     }
+
+    .send_message{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-self: center;
+      align-content: space-around;
+    }

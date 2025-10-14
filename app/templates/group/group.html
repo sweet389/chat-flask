@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Chat</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap">
+  <link rel="stylesheet" href="../../static/main.css">
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+        <div class="logo">
+            <h1 class="logo">Chat</h1>
+        </div>
+        <hr>
+      <ul class="menu">
+        <li><div class="sidebar-button">
+            <a href="{{ url_for('profile')}}">👤 Perfil</a>
+        </div></li>
+        <li><div class="sidebar-button">
+            <a href="{{ url_for('create_group')}}">💬 Criar Grupos</a>
+        </div></li>
+        <li><div class="sidebar-button">
+            <a href="{{url_for('search_group')}}">🔍 Buscar Chats</a>
+        </div></li>
+      </ul>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" style="font-size: 16px;">🌙 Tema</button>
+  </div>
+
+  <div class="main">
+    <h1>{{group.name}}</h1>
+        <div class="chat-box" style="height: 100%;">
+            <div>
+                <ul id="chat-messages">
+
+                </ul>
+            </div>
+            <div class="send_message">
+                <input type="text" id="message">
+            </div>
+        </div>
+    </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
+
+    const socket = io({autoConnect: false});
+    socket.connect();
+    socket.on('connect', function(){
+        console.log("A")
+        socket.emit("user_connect", "{{user}}", "{{group.id}}");
+    })
+
+    document.getElementById("message").addEventListener("keyup", function(event){
+        if (event.key == "Enter"){ 
+            let message = document.getElementById("message").value;
+            socket.emit("new_message", message, "{{group.id}}");
+            document.getElementById("message").value = "";
+        }
+    })
+
+    socket.on("chat", function (data){
+        let ul=document.getElementById("chat-messages");
+        let li=document.createElement("li");
+        li.appendChild(document.createTextNode(data["username"]+": "+data["message"]));
+        ul.appendChild(li);
+        ul.scrolltop= ul.scrollHeight;
+    })
+  </script>
+</body>
+</html>

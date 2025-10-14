@@ -3,7 +3,7 @@ from db import db
 from login import hash
 from flask_login import login_user, login_required, logout_user, current_user
 from models import Usuario, Group, GroupMember
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, session
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -95,7 +95,25 @@ def search_group():
         add_member(request.form['group_name'], request.form['group_pass'])
         return redirect(url_for('search_group'))
     
-    
+@app.route('/group/<int:group_id>')
+@login_required
+def public_group(group_id):
+    group = Group.query.filter_by(id=group_id, public=True).first()
+    if not group:
+        return redirect(url_for("search_group"))
+    return render_template('group/group.html', group=group, user=current_user.name)
+
+@app.route('/g/<int:group_id>')
+@login_required
+def private_group(group_id):
+    group = Group.query.filter_by(id=group_id, public=False).first()
+    print(db.session.query(GroupMember).join(Group).filter(GroupMember.user_id == current_user.id, Group.public.is_(False), Group.id==group_id).first())
+    if not group or  not db.session.query(GroupMember).join(Group).filter(GroupMember.user_id == current_user.id, Group.public.is_(False), Group.id==group_id).first():
+        print(f"{current_user.name} kicked from {group_id}")
+        return redirect(url_for("search_group"))
+    return render_template('group/group.html', group=group, user=current_user.name)
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
