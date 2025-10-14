@@ -5,8 +5,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from models import Usuario, Group, GroupMember
 from flask import render_template, redirect, request, url_for, session
 from . import limiter, logging
-from time import datetime
-
+from datetime import datetime
 
 @app.route('/login', methods=['GET', 'POST'])
 @limiter.limit("1 per second", per_method=True, methods=['GET'])
