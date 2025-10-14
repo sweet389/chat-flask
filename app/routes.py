@@ -5,7 +5,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from models import Usuario, Group, GroupMember
 from flask import render_template, redirect, request, url_for, session
 from . import limiter, logging
-from datetime import datetime
+from time import datetime
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,7 +35,7 @@ def register():
     elif request.method=='POST':
         username=request.form['userForm']
         passwd=request.form['passForm']
-        user_ip=request.remote_addr
+        user_ip=get_client_ip()
         new_user=Usuario(name=username, passwd=hash(passwd), user_ip=user_ip, created_at=datetime.now().replace(microsecond=0))
         logging.info(f"User: {username}, registred at {datetime.now().replace(microsecond=0)} on {user_ip} IP")
         db.session.add(new_user)
@@ -149,3 +149,10 @@ def add_member(name, passwd):
     membership = GroupMember(group_id=group.id, user_id=current_user.id, role='member')
     db.session.add(membership)
     db.session.commit()
+    
+def get_client_ip():
+    if request.headers.get('X-Forwarded-For'):
+        ip = request.headers['X-Forwarded-For'].split(',')[0].strip()
+    else:
+        ip = request.remote_addr
+    return ip
