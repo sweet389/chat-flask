@@ -1,4 +1,5 @@
 from sock import socketio
+from . import logging
 from flask_socketio import emit
 from flask import request
 from flask_login import current_user
@@ -11,11 +12,13 @@ users_group={}
 @socketio.on("connect")
 def handle_connection():
     print(f"{current_user.name} Conectado!")
+    logging.info(f"{current_user.name} Conectado!")
     
     
 @socketio.on("user_connect")
 def handle_user_join(user, group_id):
     print(f"{user} Joined on {group_id}")
+    logging.info(f"{user} Joined on {group_id}")
     users[user]=request.sid
     users_group[request.sid] = group_id
     print(users)
@@ -36,6 +39,7 @@ def handle_user_disconnect():
             break
     if user != None:
         print(f"{user} Left at {group_id}")
+        logging.info(f"{user} Left at {group_id}")
         emit("chat", {
             "message": f"{user} has left the room",
             'username': "System"
@@ -47,6 +51,7 @@ def handle_user_disconnect():
     if group_id:
         leave_room(group_id)
         send({"name": user, "message": "has left the room"}, to=group_id)
+        
     
 user_last_msg = {}
 
@@ -60,6 +65,7 @@ def new_menssage(message, group_id):
             'username': username
         },to=group_id)
         print(f"{message} sended by {username} to {group_id}")
+        logging.info(f"{message} sended by {username} to {group_id}")
         user_last_msg[username] = now
     
 

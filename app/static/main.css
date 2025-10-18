@@ -333,7 +333,7 @@ button:hover, #logout:hover {
         padding: .7vw;
         margin-bottom: 10px;
         border-radius: 10px;
-        background-color: #ad2828;
+        background-color: #252525;
         mix-blend-mode: difference;
         color: rgb(255, 255, 255); /* precisa de uma cor base */
         font-size: 15px;
