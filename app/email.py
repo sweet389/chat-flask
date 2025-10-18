@@ -27,10 +27,10 @@ class KeywordEmailHandler(logging.Handler):
         log_entry = self.format(record)
         if self.keyword in log_entry.upper():
             if self.keyword == "Baltrota":
-                print("EMAIL SENT")
+                logging.info("EMAIL SENT")
                 send_baltrota_message(log_entry)
             else:
-                print("EMAIL SENT")
+                logging.info("EMAIL SENT")
                 send_simple(subject=self.keyword, text=log_entry)
 
          
