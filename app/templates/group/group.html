@@ -29,23 +29,22 @@
         </div></li>
       </ul>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" style="font-size: 16px;">🌙 Tema</button>
+    <button class="theme-toggle" onclick="toggleTheme()" style="font-size: 16px;"><p>🌙 Tema</p></button>
   </div>
 
   <div class="main">
     <h1>{{group.name}}</h1>
         <div class="chat-box" style="height: 100%;">
-            <div>
-                <ul id="chat-messages">
-
+              <div class="messages-container">
+                <ul id="message-box" >
+                    
                 </ul>
             </div>
             <div class="send_message">
-                <input type="text" id="message">
+                <input type="text" name="text" class="input-message" id="message" placeholder="Write a message">
             </div>
-        </div>
     </div>
-
+</div>
   <script>
     function toggleTheme() {
       document.body.classList.toggle("light");

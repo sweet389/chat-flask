@@ -16,7 +16,7 @@ def login():
     elif request.method=='POST':
         username=request.form['userForm']
         passwd=request.form['passForm']
-        logging.info(f"User: {username}, tried to login")
+        logging.info(f"User: {username}, tried to login on {get_client_ip()}")
         user=db.session.query(Usuario).filter_by(name=username, passwd=hash(passwd)).first()
         if not user:
             return render_template('auth/login.html')
