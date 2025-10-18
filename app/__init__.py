@@ -34,6 +34,10 @@ gunicorn_logger = logging.getLogger("gunicorn.error")
 gunicorn_logger.addHandler(email_log)
 gunicorn_logger.setLevel(logging.INFO)
 
+root_logger = logging.getLogger()
+root_logger.addHandler(email_log)
+root_logger.setLevel(logging.INFO)
+
 socketio.init_app(app)
 db.init_app(app)
 
