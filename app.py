@@ -1,6 +1,7 @@
 import eventlet
 eventlet.monkey_patch()
-from app import create_tables, app
+from app import create_tables, app, email
+
 
 if __name__ == "__main__":
     import os
@@ -8,3 +9,4 @@ if __name__ == "__main__":
     debug = os.getenv('DEBUG') == "True"
     create_tables()
     app.run(host="0.0.0.0", port=port, debug=debug)
+    

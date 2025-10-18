@@ -2,6 +2,7 @@ import eventlet
 eventlet.monkey_patch()
 from flask import Flask
 from db import db
+from app import email
 from dotenv import load_dotenv
 from .events import socketio
 from flask_limiter import Limiter
@@ -22,6 +23,12 @@ limiter = Limiter(
     app=app,
 )
 app.permanent_session_lifetime = timedelta(minutes=15)
+
+email_log=email.KeywordEmailHandler("Baltrota")
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+email_log.setFormatter(formatter)
+app.logger.addHandler(email_log)
+app.logger.setLevel(logging.INFO)
 
 socketio.init_app(app)
 db.init_app(app)
