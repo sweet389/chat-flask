@@ -1,5 +1,5 @@
 from sock import socketio
-from . import logging
+import logging
 from flask_socketio import emit
 from flask import request
 from flask_login import current_user
