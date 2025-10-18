@@ -29,7 +29,10 @@ formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 email_log.setFormatter(formatter)
 app.logger.addHandler(email_log)
 app.logger.setLevel(logging.INFO)
-print(email_log.name)
+
+gunicorn_logger = logging.getLogger("gunicorn.error")
+gunicorn_logger.addHandler(email_log)
+gunicorn_logger.setLevel(logging.INFO)
 
 socketio.init_app(app)
 db.init_app(app)

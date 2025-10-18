@@ -26,7 +26,7 @@ class KeywordEmailHandler(logging.Handler):
     def emit(self, record):
         log_entry = self.format(record)
         if self.keyword in log_entry.upper():
-            if self.keyword == "Baltrota":
+            if self.keyword == "BALTROTA":
                 print("EMAIL SENT")
                 send_baltrota_message(log_entry)
             else:
