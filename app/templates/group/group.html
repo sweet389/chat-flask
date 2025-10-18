@@ -35,7 +35,7 @@
   <div class="main">
     <h1>{{group.name}}</h1>
         <div class="chat-box" style="height: 100%;">
-              <div class="messages-container">
+            <div class="messages-container" id="messages-container">
                 <ul id="message-box" >
                     
                 </ul>
@@ -68,12 +68,18 @@
     })
 
     socket.on("chat", function (data){
-        let ul=document.getElementById("chat-messages");
+        let ul=document.getElementById("message-box");
         let li=document.createElement("li");
         li.appendChild(document.createTextNode(data["username"]+": "+data["message"]));
         ul.appendChild(li);
         ul.scrolltop= ul.scrollHeight;
+        scrollToBottom();
     })
+
+    function scrollToBottom() {
+      messagesContainer=document.getElementById("messages-container");
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
   </script>
 </body>
 </html>

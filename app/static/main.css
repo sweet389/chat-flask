@@ -133,14 +133,13 @@ button:hover, #logout:hover {
 
   .input-field {
   margin: 25px 0;
-  margin-right: 1000px;
+  margin-right: 10px;
 }
 .input-field label {
   text-wrap-mode: nowrap;
   text-wrap-style: auto;
   text-align: justify;
   align-items: start;
-  margin-top: 5vh;
   color: #ffffff;
   font-size: 24px;
   pointer-events: none;
@@ -272,6 +271,7 @@ button:hover, #logout:hover {
 
     .send_message{
       display: flex;
+      position: sticky;
       flex-direction: row;
       justify-content: flex-end;
       align-self: center;
@@ -302,15 +302,73 @@ button:hover, #logout:hover {
         box-shadow: 0 0 0 .15vw skyblue;
       }
 
-    .messages-container {
-      padding: 15px;
+      .messages-container{
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+        width: fit-content;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .messages-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .messages-container {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
       }
 
       #message-box{
-        padding: 1vw;
-        margin-bottom: 5px;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+      }
+
+
+      #message-box li{
+        padding: .7vw;
+        margin-bottom: 10px;
         border-radius: 10px;
-        background-color: #f1f1f1;
-        color: black;
-        font-size: 13px;
+        background-color: #ad2828;
+        mix-blend-mode: difference;
+        color: rgb(255, 255, 255); /* precisa de uma cor base */
+        font-size: 15px;
+        font-weight: 600;
+        width: fit-content;
+      }
+      
+      /*------ Style 1 ------*/
+      #style1 {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 10vw;
+        height: 10vw;
+        max-width: 67px;
+        max-height: 67px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      #style1::-webkit-color-swatch {
+        border-radius: 15px;
+        border: none;
+      }
+      #style1::-moz-color-swatch {
+        border-radius: 15px;
+        border: none;
+      }
+
+
+      #color{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+        flex-wrap: wrap;
+        gap: 10px;
       }

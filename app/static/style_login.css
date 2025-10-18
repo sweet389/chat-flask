@@ -77,9 +77,7 @@ h2 {
   margin: 25px 0 35px 0;
   color: #fff;
 }
-#remember {
-  accent-color: #fff;
-}
+
 .forget label {
   display: flex;
   align-items: center;
